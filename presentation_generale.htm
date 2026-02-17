@@ -1,0 +1,184 @@
+@startuml
+class UMLModel {
+    +parse(filePath : String) : UMLModel
+    +getClasses() : List<UMLClass>
+    +getRelations() : List<UMLRelation>
+}
+
+abstract Class {
+    -id
+    -name : String
+    -type : ClassType
+    -comment : String
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+abstract Relation {
+    -id
+    -cardinality : String
+    -relationType : RelationType
+    -label : String
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+abstract Attribute {
+    -id
+    -visibility : Visibility
+    -name : String
+    -type : String
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+abstract Method {
+    -id
+    -visibility : Visibility
+    -name : String
+    -params : String
+    -returnType : String
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+UMLModel "1..*"o-- "1..*" Class
+Class "1..1"*-- "0..*" Method 
+Class "2..2" --  "0..*" Relation : Relie 
+Class "1..1"*-- "0..*" Attribute
+
+abstract enum {
+    Nom_type
+}
+
+enum RelationType {
+    ASSOCIATION
+    AGGREGATION
+    COMPOSITION
+    INHERITANCE
+    INTERFACE_IMPL
+}
+
+enum ClassType {
+    CLASS
+    ABSTRACT
+    INTERFACE
+}
+
+enum Visibility {
+    PUBLIC
+    PRIVATE
+    PROTECTED
+}
+
+package Java {
+class JavaClass {
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+class JavaRelation {
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+class JavaAttribute {
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+
+class JavaMethod {
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+}
+
+package Perl {
+class PerlClass {
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+class PerlRelation {
+    -id
+    -cardinality : String
+    -relationType : RelationType
+    -label :U String
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+class PerlAttribute {
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+class PerlMethod {
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+}
+
+package Python {
+class PythonClass {
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+class PythonRelation {
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+class PythonAttribute {
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+
+class PythonMethod {
+    +produceCode(model : Model) : void
+    +writeClassFile(code : String, dir : String) : void
+    +cleanDirectory(dir : String) : void
+}
+}
+
+Class <|-- JavaClass 
+Relation <|-- JavaRelation
+Attribute <|-- JavaAttribute
+Method <|-- JavaMethod
+JavaClass "1..1"*-- "0..*" JavaAttribute 
+JavaClass "1..1"*-- "0..*" JavaMethod 
+JavaClass "2..2" --  "0..*" JavaRelation : Relie 
+
+Class <|-- PerlClass 
+Relation <|-- PerlRelation
+Attribute <|-- PerlAttribute
+Method <|-- PerlMethod
+PerlClass "1..1"*-- "0..*" PerlAttribute 
+PerlClass "1..1"*-- "0..*" PerlMethod 
+PerlClass "2..2" --  "0..*" PerlRelation : Relie 
+
+Class <|---- PythonClass 
+Relation <|-- PythonRelation
+Attribute <|-- PythonAttribute
+Method <|-- PythonMethod
+PythonClass "1..1"*-- "0..*" PythonAttribute 
+PythonClass "1..1"*-- "0..*" PythonMethod 
+PythonClass "2..2" --  "0..*" PythonRelation : Relie
+@enduml
